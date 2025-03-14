@@ -51,8 +51,8 @@ function App() {
               >copy</button>
         </div>
          
-         <div className='flex text-sm gap-x-2'>
-           <div className='flex items-center gap-x-1 py-5'>
+         <div className='flex text-md gap-x-4'>
+           <div className='flex items-center gap-x-3 py-5'>
              <input 
 
                type="range"
@@ -64,6 +64,28 @@ function App() {
              />
                <label>Length: {length}</label>
            </div>
+           <div className="flex items-center gap-x-3">
+             <input
+               type="checkbox"
+               defaultChecked={numberAllowed}
+               id="numberInput"
+               onChange={() => {
+               setnumberAllowed((prev) => !prev);
+                }}
+              />
+              <label htmlFor="numberInput">Numbers</label>
+            </div>
+            <div className="flex items-center gap-x-3">
+              <input
+                type="checkbox"
+                defaultChecked={charAllowed}
+                id="characterInput"
+               onChange={() => {
+                  setcharAllowed((prev) => !prev )
+               }}
+             />
+              <label htmlFor="characterInput">Characters</label>
+            </div>
          </div>
       
      </div>

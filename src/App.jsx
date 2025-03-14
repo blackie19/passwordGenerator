@@ -1,4 +1,4 @@
-import { useState ,useCallback} from 'react'
+import { useState ,useCallback,useRef} from 'react'
 
 import './App.css'
 
@@ -7,17 +7,18 @@ function App() {
   const[numberAllowed,setnumberAllowed] =useState(false)
   const[charAllowed,setcharAllowed]=useState(false)
   const[Password,setPassword]=useState("")
+  const passwordRef = useRef(null)
 
   const passwordGenerator = useCallback(()=>{
 
-    const pass=""
-    const str="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    let  pass=""
+     let str="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
     
     if (numberAllowed) str +="1234567890"
     if(charAllowed) str += "(  @#$%^&*(){}:;'?/[]) "
 
     for(let i = 1;i<=length;i++){
-      let index = Math.floor(Math.random()*str.length()+1)
+      let index = Math.floor(Math.random()*str.length())
       pass += str.charAt(index)
     }
 
@@ -25,11 +26,32 @@ function App() {
 
 
   },[length,numberAllowed,charAllowed,setPassword])
-  
+
 
   return (
     <>
-      <h1 className="text-4xl text-enter text-white">Password generator</h1>
+     <div className='w-full max-w-lg mx-auto
+       shadow-md rounded-lg px-7 my-8 text-orange-500 bg-gray-700'>
+
+          <h1 className='text-white text-center my-3'>Password generator</h1>
+        <div className='flex shadow rounded-lg overflow-hidden mb-4"'>
+           
+          <input 
+           type="text"
+           value = {Password}
+           className="outline-none w-full py-1 px-3"
+           placeholder="password"
+           readOnly
+           ref={passwordRef}
+           />
+
+             <button
+             
+             className='outline-none bg-blue-700 text-white px-3 py-0.5 shrink-0'
+              >copy</button>
+        </div>
+      
+     </div>
       
     </>
   )

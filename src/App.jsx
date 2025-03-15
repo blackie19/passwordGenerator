@@ -7,6 +7,7 @@ function App() {
   const[numberAllowed,setnumberAllowed] =useState(false)
   const[charAllowed,setcharAllowed]=useState(false)
   const[Password,setPassword]=useState("")
+
   const passwordRef = useRef(null)
 
   const passwordGenerator = useCallback(()=>{
@@ -18,7 +19,7 @@ function App() {
     if(charAllowed) str += "(  @#$%^&*(){}:;'?/[]) "
 
     for(let i = 1;i<=length;i++){
-      let index = Math.floor(Math.random()*str.length())
+      let index = Math.floor(Math.random()*str.length)
       pass += str.charAt(index)
     }
 
@@ -26,10 +27,17 @@ function App() {
 
 
   },[length,numberAllowed,charAllowed,setPassword])
-   
-  useEffect(()=>{
+
+  const copyPasswordToClipboard = useCallback(() => {
+    passwordRef.current?.select();
+    passwordRef.current?.setSelectionRange(0, 999);
+    window.navigator.clipboard.writeText(Password)
+  }, [Password])
+  
+   useEffect(()=>{
       passwordGenerator()
-  },[length,numberAllowed,charAllowed,passwordGenerator])
+    },[length,numberAllowed,charAllowed,passwordGenerator])
+ 
 
   return (
     <>
@@ -49,8 +57,8 @@ function App() {
            />
 
              <button
-             
-             className='outline-none bg-blue-700 text-white px-3 py-0.5 shrink-0'
+               onClick={copyPasswordToClipboard}
+               className='outline-none bg-blue-700 text-white px-3 py-0.5 shrink-0'
               >copy</button>
         </div>
          
